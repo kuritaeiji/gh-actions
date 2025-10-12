@@ -1,0 +1,16 @@
+name: Expression
+on: push
+jobs:
+  print:
+    runs-on: ubuntu-latest
+    steps:
+      - run: printenv | grep "LITERAL_"
+        env:
+          LITERAL_NULL: ${{ null }}
+          LITERAL_BOOLEAN: ${{ true }}
+          LITERAL_NUMBER: ${{ 1 }}
+          LITERAL_STRING: ${{ 'hello' }}
+          LITERAL_OMIT_STRING: world
+      - env:
+          HTML_URLS: ${{ github.event.*.html_url }}
+        run: echo "${HTML_URLS}"

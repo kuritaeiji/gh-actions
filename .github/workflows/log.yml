@@ -1,0 +1,23 @@
+name: Logging
+on: workflow_dispatch
+defaults:
+  run:
+    shell: bash
+jobs:
+  debug:
+    name: debug
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: debug
+        run: echo "::debug::This is a debug log"
+  trace:
+    name: trace log
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: trace log
+        run: |
+          set -x
+          date
+          hostname

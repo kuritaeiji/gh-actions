@@ -1,0 +1,16 @@
+name: Shell
+on: workflow_dispatch
+jobs:
+  print:
+    name: print
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: bash shell
+        shell: bash
+        run: echo "${SHELL}"
+      - name: python shell
+        shell: python
+        run: |
+          import os
+          print(os.environ['PATH'])

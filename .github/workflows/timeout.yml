@@ -5,6 +5,6 @@ jobs:
     name: sleep
     runs-on: ubuntu-latest
     steps:
-      - name: "sleep 1 minute"
+      - name: sleep 1 minutes
         timeout-minutes: 1
         run: sleep 120

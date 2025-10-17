@@ -21,3 +21,12 @@ jobs:
           set -x
           date
           hostname
+  mask:
+    name: mask env
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    env:
+      PASSWORD: password
+    steps:
+      - run: echo "::add-mask::${PASSWORD}"
+      - run: echo "${PASSWORD}"

@@ -1,0 +1,18 @@
+name: Test
+on:
+  pull_request:
+    paths:
+      - "go/**/*.go"
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: "go/go.mod"
+          cache: false
+      - run: go test go/*.go
+        name: go test

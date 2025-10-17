@@ -21,4 +21,4 @@ jobs:
   third:
     runs-on: ubuntu-latest
     steps:
-      - run: sleep && "third job"
+      - run: sleep && echo "third job"

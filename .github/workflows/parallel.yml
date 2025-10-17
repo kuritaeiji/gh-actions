@@ -1,0 +1,24 @@
+name: Parallel jobs
+on: workflow_dispatch
+defaults:
+  run:
+    shell: bash
+jobs:
+  first:
+    name: first job
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: sleep
+        run: sleep 10 && echo "first job"
+  second:
+    name: second job
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: sleep
+        run: sleep 10 && echo "second job"
+  third:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep && "third job"

@@ -1,0 +1,14 @@
+name: Concurrency
+on: workflow_dispatch
+defaults:
+  run:
+    shell: bash
+concurrency: ${{ github.workflow }}
+jobs:
+  sleep:
+    name: sleep
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: sleep
+        run: sleep 120

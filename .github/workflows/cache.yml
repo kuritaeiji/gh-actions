@@ -19,3 +19,4 @@ jobs:
           if [[ -f "${GITHUB_WORKSPACE}/dummy" ]]; then 0; fi
           dd if=/dev/random of="${GITHUB_WORKSPACE}/dummy" bs=1M count=10
           sleep 30
+      - run: ls -lh "${GITHUB_WORKSPACE}/dummy"

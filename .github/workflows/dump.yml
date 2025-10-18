@@ -1,0 +1,14 @@
+name: Dump
+on: workflow_dispatch
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - uses: ./.github/actions/dump
+        id: dump
+        with:
+          enable-context: "true"
+      - run: echo "${DUMPED_DATE}"
+        env:
+          DUMPED_DATE: ${{ steps.dump.outputs.dumped-date }}

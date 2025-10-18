@@ -1,0 +1,21 @@
+name: Cache
+on: workflow_dispatch
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  cache:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/dummy
+          key: test-${{ runner.os }}-${{ runner.arch }}
+          restore-keys: test-${{ runner.os }}
+      - run: |
+          if [[ -f "${GITHUB_WORKSPACE}/dummy" ]]; then 0; fi
+          dd if=/dev/random of="${GITHUB_WORKSPACE}/dummy" bs=1M count=10
+          sleep 30

@@ -1,5 +1,5 @@
 name: Environments
-run-name: ${{ github.ref_name }} branch
+run-name: ${{ github.ref_name }} branch, ${{ inputs.environment-name }} environment
 on:
   workflow_dispatch:
     inputs:

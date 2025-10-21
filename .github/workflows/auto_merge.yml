@@ -1,0 +1,22 @@
+name: Auto merge
+on: pull_request
+
+jobs:
+  merge:
+    if: ${{ github.actor == 'dependabot[bot]'}}
+    name: merge library
+    timeout-minutes: 1
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v5
+      - id: meta
+        uses: dependabot/fetch-metadata@v2
+      - if: ${{ steps.meta.outputs.update-type == 'version-update:semver-patch' || steps.meta.outputs.update-type == 'version-update:semver-minor'}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr review "${GITHUB_HEAD_REF}" --approve
+          gh pr merge "${GITHUB_HEAD_REF}" --merge --auto

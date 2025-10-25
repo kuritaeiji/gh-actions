@@ -1,0 +1,24 @@
+name: OpenID Connect
+on: workflow_dispatch
+defaults:
+  run:
+    shell: bash
+env:
+  ROLE_NAME: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.ROLE_NAME }}
+  SESSION_NAME: gh-oidc-${{ github.run_id }}-${{ github.run_attempt }}
+
+jobs:
+  connect:
+    name: connect aws
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    permissions:
+      id-token: write
+    steps:
+      - name: Configure AWS Credential
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume:
+          aws-region: ap-northeast-1
+      - name: list users
+        run: aws iam list-users

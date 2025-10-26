@@ -1,0 +1,39 @@
+name: Container Deploy
+description: ECSサービスを更新し、コンテナをデプロイします
+inputs:
+  ecs-cluster:
+    required: true
+    description: ECSクラスター名
+  ecs-service:
+    required: true
+    description: ECSサービス名
+  task-definition:
+    required: true
+    description: タスク定義名
+  container-name:
+    required: true
+    description: コンテナ名
+  container-image:
+    required: true
+    description: コンテナイメージ名
+
+runs:
+  using: composite
+  steps:
+    - run: |
+        aws ecs describe-task-definition --task-definition "${{ TASK_DEFINITION }}" \
+        --query taskDefinition --output json > "${RUNNER_TEMP}/task-def.json"
+      shell: bash
+      env:
+        TASK_DEFINITION: ${{ inputs.task-definition }}
+    - uses: aws-actions/amazon-ecs-render-task-definition@v1
+      id: render
+      with:
+        task-definition: ${{ runner.temp }}/task-def.json
+        container-name: ${{ inputs.container-name }}
+        image: ${{ inputs.container-image }}
+    - uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+      with:
+        task-definition: ${{ steps.outputs.render.task-definition }}
+        service: ${{ inputs.ecs-service }}
+        cluster: ${{ inputs.ecs-cluster }}

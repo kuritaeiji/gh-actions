@@ -1,4 +1,4 @@
-name: deploy
+name: Deploy
 on: workflow_dispatch
 defaults:
   run:
@@ -11,6 +11,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 2
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v5
       - uses: aws-actions/configure-aws-credentials@v4

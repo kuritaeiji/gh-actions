@@ -34,6 +34,6 @@ runs:
         image: ${{ inputs.container-image }}
     - uses: aws-actions/amazon-ecs-deploy-task-definition@v2
       with:
-        task-definition: ${{ steps.outputs.render.task-definition }}
+        task-definition: ${{ steps.render.outputs.task-definition }}
         service: ${{ inputs.ecs-service }}
         cluster: ${{ inputs.ecs-cluster }}

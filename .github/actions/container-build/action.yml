@@ -27,5 +27,5 @@ runs:
       with:
         push: true
         context: ${{ inputs.docker-filepath }}
-        tags: ${{ steps.outputs.meta.tags }}
-        labels: ${{ steps.outputs.meta.labels }}
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}

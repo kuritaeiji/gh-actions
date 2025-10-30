@@ -1,0 +1,26 @@
+name: Call
+on: pull_request
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  call:
+    name: call reusable workflow
+    uses: ./.github/workflows/reusable_workflows.yml
+    with:
+      pr-number: ${{ github.event.pull_request.number }}
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
+      pull-requests: write
+
+  output:
+    needs: [call]
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - env:
+          MESSAGE: ${{ needs.call.outputs.message }}
+        run: echo "Result> ${MESSAGE}"

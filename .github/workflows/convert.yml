@@ -1,0 +1,14 @@
+name: Convert
+on: workflow_dispatch
+defaults:
+  run:
+    shell: bash
+env:
+  TIMEOUT: 1
+
+jobs:
+  sleep:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 120
+        timeout-minutes: ${{ fromJson(env.TIMEOUT) }}

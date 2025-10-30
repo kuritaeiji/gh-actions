@@ -1,0 +1,14 @@
+name: Continue on Error
+on: workflow_dispatch
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  failure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - run: exit 1
+        continue-on-error: true
+      - run: echo "Success"

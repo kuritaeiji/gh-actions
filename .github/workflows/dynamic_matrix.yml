@@ -1,0 +1,27 @@
+name: Dynamic matrix
+on: workflow_dispatch
+
+defaults: &defaults
+  run:
+    shell: bash
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - run: |
+          json='{"runner": ["ubuntu-latest", "macos-latest"]}'
+          echo "json=${json}" >> ${GITHUB_OUTPUT}
+        id: dynamic
+    outputs:
+      json: ${{ steps.dynamic.outputs.json }}
+
+  print:
+    needs: [prepare]
+    strategy:
+      matrix: ${{ fromJSON(needs.prepare.outputs.json) }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 1
+    steps:
+      - run: echo "${RUNNER_OS}"

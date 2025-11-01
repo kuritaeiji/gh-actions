@@ -1,0 +1,16 @@
+name: Flow control
+on: workflow_dispatch
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  run:
+    timeout-minutes: 1
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit "$(( RANDOM % 2 ))"
+      - run: exit 1
+        id: error
+      - run: echo "Catch up error step"
+        if: ${{ failure() && steps.error.outcome == 'failure' }}

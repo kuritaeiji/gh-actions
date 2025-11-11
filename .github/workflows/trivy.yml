@@ -1,4 +1,4 @@
-name: Container image scan
+name: Trivy
 on: workflow_dispatch
 defaults:
   run:

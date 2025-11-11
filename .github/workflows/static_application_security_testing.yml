@@ -1,0 +1,29 @@
+name: Static Application Security Testing
+on: workflow_dispatch
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  sast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GOSEC_VERSION: v2.22.0
+    steps:
+      - name: Cache Docker image
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}
+          key: ${{ runner.os }}-docker-${{ env.GOSEC_VERSION }}
+          restore-keys: ${{ runner.os }}-docker
+      - name: Load cached image
+        env:
+          TEMP: ${{ runner.temp }}
+        run: docker image load -i "${TEMP}/gosec.tar" || true
+      - name: Pull gosec image
+        env:
+          TEMP: ${{ runner.temp }}
+        run: |
+          docker image pull "scurego/gosec:${GOSEC_VERSION}"
+          docker image save "scurego/gosec:${GOSEC_VERSION}" -o "${TEMP}/gosec.tar"

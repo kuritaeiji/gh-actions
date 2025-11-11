@@ -1,0 +1,23 @@
+name: Container image scan
+on: workflow_dispatch
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: image scan
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          image-ref: nginx:1.11.0
+          severity: CRITICAL,HIGH
+          exit-code: 1
+      - name: iac scan
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          scan-type: "config"
+          severity: CRITICAL,HIGH
+          exit-code: 1

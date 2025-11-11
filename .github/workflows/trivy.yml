@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      - name: pull image
+        run: docker image pull nginx:1.11.0
       - name: image scan
         uses: aquasecurity/trivy-action@0.33.1
         with:

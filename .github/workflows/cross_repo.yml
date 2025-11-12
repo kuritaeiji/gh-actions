@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 1
     env:
-      TARGET_REPO: Memo
+      TARGET_REPO: dbt-ec
     steps:
       - id: create
         uses: actions/create-github-app-token@v1
